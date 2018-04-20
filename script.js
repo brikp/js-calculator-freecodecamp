@@ -14,22 +14,22 @@ let equationElement = document.getElementById('equation');
 
 let updateCurrentNumber = function () {
   currentNumberElement.textContent = currentNumber;
-}
+};
 
 let updateEquation = function () {
   equationElement.textContent = equation;
-}
+};
 
 let updateOperator = function() {
   currentOperatorElement.textContent = currentOperator;
-}
+};
 
 let isValidFirstNumber = function (number) {
   if (number == '0' || number == '0.' || number == '0.0')
     return false;
   else 
     return true;
-}
+};
 
 let clearDigit = function () {
   if (currentNumber.length > 1)
@@ -42,7 +42,7 @@ let clearDigit = function () {
     updateEquation();
   }  
   updateCurrentNumber();
-}
+};
 
 let clearEntry = function () {
   if (currentNumber != '0') {
@@ -58,7 +58,7 @@ let clearEntry = function () {
     isAfterCalculation = false;
     updateEquation();
   }
-}
+};
 
 let clearAll = function () {
   currentNumber = '0';
@@ -66,7 +66,7 @@ let clearAll = function () {
   isAfterCalculation = false;
   updateCurrentNumber();
   updateEquation();
-}
+};
 
 let processCalcInput = function (input) {
   
@@ -159,6 +159,23 @@ let processEquation = function () {
 
 [].forEach.call(document.getElementsByClassName('calc-input'), element => {
   element.addEventListener('click', () => processCalcInput(element.textContent));
+});
+
+document.addEventListener('keydown', (e) => {
+  let processedKeys = '0123456789+-*/';
+  console.log(e.key);
+  if (processedKeys.indexOf(e.key) > -1) {
+    processCalcInput(e.key);
+  }
+  else if (e.key == '=' || e.key == 'Enter') {
+    processEquation();
+  }
+  else if (e.key == 'Backspace') {
+    clearDigit();
+  }
+  else if (e.key == 'Delete') {
+    clearEntry();
+  }
 });
 
 document.getElementById('clear-entry').addEventListener('click', () => clearEntry());
