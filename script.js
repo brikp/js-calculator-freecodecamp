@@ -161,7 +161,7 @@ let processEquation = function () {
   element.addEventListener('click', () => processCalcInput(element.textContent));
 });
 
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keypress', (e) => {
   let processedKeys = '0123456789+-*/';
   console.log(e.key);
   if (processedKeys.indexOf(e.key) > -1) {
