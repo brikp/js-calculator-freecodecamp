@@ -1,9 +1,15 @@
 .calculator-container {
-  max-width: 240px;
+  max-width: 256px;
+  background-color: gainsboro;
+}
+
+.btn {
+  margin: 2px;
 }
 
 .btn-wide {
   width: 100px;
+  margin-left: 3px;
 }
 
 .btn-small {
@@ -12,4 +18,8 @@
 
 .btn-clear-digit {
   width: 40px;
+}
+
+#current-number {
+  margin-right:10px;
 }

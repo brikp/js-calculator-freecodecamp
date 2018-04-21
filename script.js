@@ -81,7 +81,10 @@ let clearAll = function () {
 };
 
 let processCalcInput = function (input) {
-  
+
+  if (input == ',')
+    input = '.';
+
   // input is an operator
   if (MATH_OPERATORS.indexOf(input) >= 0) { 
     currentOperator = input;
@@ -114,8 +117,8 @@ let processCalcInput = function (input) {
     updateOperator();
   }
 
-  // input is a dot (.) 
-  else if (input == '.' && !isAfterCalculation) {
+  // input is a dot (.)
+  else if ((input == '.') && !isAfterCalculation) {
     if (currentNumber.indexOf('.') < 0)
       currentNumber = currentNumber.concat(input);
   }
@@ -169,28 +172,35 @@ let processEquation = function () {
   }
 };
 
-[].forEach.call(document.getElementsByClassName('calc-input'), element => {
-  element.addEventListener('click', () => processCalcInput(element.textContent));
-});
+let bindEventListeners = function () {
+  [].forEach.call(document.getElementsByClassName('calc-input'), element => {
+    element.addEventListener('click', () => processCalcInput(element.textContent));
+  });
+  
+  document.addEventListener('keydown', (e) => {
+    let processedKeys = '0123456789+-*/,.';
+    console.log(e.key);
+    if (processedKeys.indexOf(e.key) > -1) {
+      processCalcInput(e.key);
+    }
+    else if (e.key == '=' || e.key == 'Enter') {
+      processEquation();
+    }
+    else if (e.key == 'Backspace') {
+      clearDigit();
+    }
+    else if (e.key == 'Delete') {
+      clearEntry();
+    }
+  });
+  
+  document.getElementById('clear-entry').addEventListener('click', () => clearEntry());
+  document.getElementById('clear-all').addEventListener('click', () => clearAll());
+  document.getElementById('clear-digit').addEventListener('click', () => clearDigit());
+  document.getElementById('calculate').addEventListener('click', () => processEquation());
+};
 
-document.addEventListener('keydown', (e) => {
-  let processedKeys = '0123456789+-*/';
-  console.log(e.key);
-  if (processedKeys.indexOf(e.key) > -1) {
-    processCalcInput(e.key);
-  }
-  else if (e.key == '=' || e.key == 'Enter') {
-    processEquation();
-  }
-  else if (e.key == 'Backspace') {
-    clearDigit();
-  }
-  else if (e.key == 'Delete') {
-    clearEntry();
-  }
-});
-
-document.getElementById('clear-entry').addEventListener('click', () => clearEntry());
-document.getElementById('clear-all').addEventListener('click', () => clearAll());
-document.getElementById('clear-digit').addEventListener('click', () => clearDigit());
-document.getElementById('calculate').addEventListener('click', () => processEquation());
+if (document.readyState != 'loading') 
+  bindEventListeners();
+else 
+  document.addEventListener('DOMContentLoaded', () => bindEventListeners());
