@@ -13,11 +13,23 @@ let currentOperatorElement = document.getElementById('operator');
 let equationElement = document.getElementById('equation');
 
 let updateCurrentNumber = function () {
-  currentNumberElement.textContent = currentNumber;
+  let displayText = currentNumber;
+  if (displayText.length > 20) {
+    displayText = '...'.concat(displayText.slice(displayText.length - 20));
+  }
+
+  currentNumberElement.textContent = displayText;
 };
 
 let updateEquation = function () {
-  equationElement.textContent = equation;
+  let displayText = equation;
+  if (displayText.length > 20) {
+    displayText = '...'.concat(displayText.slice(displayText.length - 20));
+  }
+  if (equation.length == 0)
+    equationElement.textContent = '0';
+  else   
+    equationElement.textContent = displayText;
 };
 
 let updateOperator = function() {
@@ -161,7 +173,7 @@ let processEquation = function () {
   element.addEventListener('click', () => processCalcInput(element.textContent));
 });
 
-document.addEventListener('keypress', (e) => {
+document.addEventListener('keydown', (e) => {
   let processedKeys = '0123456789+-*/';
   console.log(e.key);
   if (processedKeys.indexOf(e.key) > -1) {

@@ -1,0 +1,15 @@
+.calculator-container {
+  max-width: 240px;
+}
+
+.btn-wide {
+  width: 100px;
+}
+
+.btn-small {
+  width: 60px;
+}
+
+.btn-clear-digit {
+  width: 40px;
+}
